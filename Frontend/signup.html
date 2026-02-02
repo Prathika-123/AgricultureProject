@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Agri Signup</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial;
+            background: linear-gradient(135deg, #1b5e20, #66bb6a);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card {
+            background: #ffffff;
+            width: 380px;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0px 5px 20px rgba(0,0,0,0.3);
+        }
+
+        h2 {
+            text-align: center;
+            color: #1b5e20;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            color: #2e7d32;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 6px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            width: 100%;
+            background: #388e3c;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background: #1b5e20;
+        }
+
+        .popup {
+            margin-top: 15px;
+            text-align: center;
+            background: #e8f5e9;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .popup a {
+            color: #1b5e20;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .popup a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="card">
+    <h2>🌾 Create Account</h2>
+
+    <form id="signupForm">
+
+        <input type="text" id="username" placeholder="Username" required>
+        <input type="email" id="email" placeholder="Email" required>
+        <input type="password" id="password" placeholder="Password" required>
+        <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+
+        <select id="role">
+            <option value="FARMER">Farmer</option>
+            <option value="BUYER">Buyer</option>
+        </select>
+
+        <button type="submit">Sign Up</button>
+    </form>
+    <div class="login-link">
+        <p>Already have an account? <a href="login.html">Login</a></p>
+    </div>
+
+    <script>
+        document.getElementById("signupForm").addEventListener("submit", async function(e) {
+            e.preventDefault();
+
+            // ✅ Correct way to get values
+            const password = document.getElementById("password").value;
+            const confirm = document.getElementById("confirmPassword").value;
+
+            if(password !== confirm){
+                alert("Passwords do not match");
+                return;
+            }
+
+            const payload = {
+                username: document.getElementById("username").value,
+                email: document.getElementById("email").value,
+                password: password,
+                role: document.getElementById("role").value
+            };
+
+            try {
+                const response = await fetch("http://localhost:8083/api/signup", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                if(response.ok){
+                    alert("Signup successful");
+                    window.location.href = "login.html";
+                } else {
+                    alert("Signup failed");
+                }
+            } catch(err) {
+                alert("Server not reachable");
+                console.error(err);
+            }
+        });
+    </script>
+
+</div>
+
+</body>
+</html>
