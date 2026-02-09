@@ -45,7 +45,9 @@ public class SecurityConfig {
                                 "/upload/image",
                                 "/get/product",
                                 "/uploads/**"  , // ⭐ THIS IS THE FIX
-                                "/get/all/products"
+                                "/get/all/products",
+                                "/cart/add",
+                                "cart/user/{userId}"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )

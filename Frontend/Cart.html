@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>My Cart | AgriBazaar</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #e8f5e9;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2e7d32;
+        }
+
+        .cart-item {
+            display: flex;
+            gap: 15px;
+            background: white;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 12px;
+        }
+
+        .cart-item img {
+            width: 120px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .details {
+            flex: 1;
+        }
+
+        .price {
+            font-weight: bold;
+            color: #1b5e20;
+        }
+
+        .total {
+            text-align: right;
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>My Cart</h1>
+
+<div id="cartContainer"></div>
+<div class="total" id="totalAmount"></div>
+
+<script>
+    const userId = 2; // 🔴 replace with logged-in user id
+
+    async function loadCart() {
+        const res = await fetch(`http://localhost:8083/cart/user/${userId}`);
+        const cart = await res.json();
+
+        const container = document.getElementById("cartContainer");
+        container.innerHTML = "";
+
+        cart.items.forEach(item => {
+            container.innerHTML += `
+                <div class="cart-item">
+                    <img src="${item.product.imageUrl}">
+                    <div class="details">
+                        <h3>${item.product.name}</h3>
+                        <p>Price:${item.product.cost}</p>
+                        <p>Quantity: ${item.quantity}</p>
+                        <p class="price">Total:₹ ${item.subtotal}</p>
+                    </div>
+                </div>
+            `;
+        });
+
+        document.getElementById("totalAmount").innerText =
+            "Total: ₹ " + cart.totalAmount;
+    }
+
+    loadCart();
+</script>
+
+</body>
+</html>

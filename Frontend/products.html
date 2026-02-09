@@ -23,7 +23,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
             gap: 28px;
-            max-width: 1200px;   /* 👈 prevents over-wide look */
+            max-width: 1200px;
             margin: 0 auto;
             padding: 30px;
         }
@@ -34,6 +34,7 @@
             border-radius: 18px;
             padding: 14px;
             text-align: center;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.15);
         }
 
         .card img {
@@ -59,6 +60,21 @@
             font-weight: bold;
             color: #1b5e20;
             font-size: 15px;
+            margin-bottom: 10px;
+        }
+
+        .add-btn {
+            background: #2e7d32;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .add-btn:hover {
+            background: #1b5e20;
         }
 
         /* MOBILE */
@@ -82,6 +98,7 @@
         const products = await res.json();
 
         const grid = document.getElementById("productGrid");
+        grid.innerHTML = "";
 
         products.forEach(p => {
             grid.innerHTML += `
@@ -90,9 +107,44 @@
                     <h3>${p.name}</h3>
                     <div class="desc">${p.description}</div>
                     <div class="price">₹ ${p.cost}</div>
+                    <button class="add-btn" onclick="addToCart(${p.id})">
+                        Add to Cart
+                    </button>
                 </div>
             `;
         });
+    }
+
+    async function addToCart(productId) {
+        const userId = localStorage.getItem("userId");
+
+        if (!userId) {
+            alert("Please login to add products to cart");
+            return;
+        }
+
+        const quantity = prompt("Enter quantity:");
+
+        if (!quantity || quantity <= 0) {
+            alert("Invalid quantity");
+            return;
+        }
+
+        try {
+            const res = await fetch(
+                `http://localhost:8083/cart/add?userId=${userId}&productId=${productId}&quantity=${quantity}`,
+                { method: "POST" }
+            );
+
+            if (!res.ok) {
+                const err = await res.text();
+                throw new Error(err);
+            }
+
+            alert("Product added to cart successfully");
+        } catch (err) {
+            alert("Error: " + err.message);
+        }
     }
 
     loadAllProducts();
