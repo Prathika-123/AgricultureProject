@@ -37,7 +37,6 @@
         #authArea {
             display: flex;
             align-items: center;
-            gap: 12px;
         }
 
         header button {
@@ -57,20 +56,65 @@
             transform: translateY(-2px);
         }
 
-        .upload-btn {
-            background: #ffb300;
-            color: #1b5e20;
-        }
+        /* ===== PROFILE DROPDOWN ===== */
+        .profile-wrapper {
+            position: relative;
+            padding-bottom: 10px; /* 👈 buffer zone */
+}
 
-        .upload-btn:hover {
-            background: #ffa000;
-        }
+       .profile-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    padding: 10px 18px;
+    border-radius: 25px;
+    background: rgba(255,255,255,0.18);
+}
 
-        .username {
-            font-weight: bold;
-            opacity: 0.95;
-        }
+        .profile-dropdown {
+    position: absolute;
+    top: 52px;
+    right: 0;
+    background: white;
+    color: #333;
+    width: 220px;
+    border-radius: 14px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    pointer-events: none;
+}
 
+        .profile-wrapper:hover .profile-dropdown,
+.profile-dropdown:hover {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+        .profile-dropdown a {
+    display: block;
+    padding: 14px 18px;
+    text-decoration: none;
+    color: #333;
+    font-size: 14px;
+    transition: background 0.3s;
+    cursor: pointer;
+}
+
+        .profile-dropdown a:hover {
+    background: #f1f8e9;
+}
+
+.profile-dropdown .logout {
+    color: #c62828;
+    font-weight: bold;
+}
         /* ===== HERO ===== */
         .hero {
             height: 100vh;
@@ -92,7 +136,6 @@
             max-width: 680px;
             margin-bottom: 40px;
             line-height: 1.6;
-            opacity: 0.95;
         }
 
         .hero .cta {
@@ -103,19 +146,12 @@
             background: linear-gradient(135deg, #43a047, #2e7d32);
             color: white;
             cursor: pointer;
-            transition: 0.3s;
         }
 
-        .hero .cta:hover {
-            transform: scale(1.05);
-            box-shadow: 0 12px 30px rgba(0,0,0,0.4);
-        }
-
-        /* ===== SECTIONS ===== */
+        /* ===== SECTION ===== */
         .section {
             padding: 100px 40px;
             text-align: center;
-            backdrop-filter: blur(3px);
         }
 
         .section h2 {
@@ -127,7 +163,6 @@
             max-width: 780px;
             margin: auto;
             font-size: 1.1rem;
-            opacity: 0.95;
             margin-bottom: 60px;
         }
 
@@ -146,13 +181,6 @@
             border-radius: 22px;
             padding: 22px;
             box-shadow: 0px 12px 35px rgba(0,0,0,0.35);
-            transition: 0.35s;
-            border: 1px solid rgba(255,255,255,0.25);
-        }
-
-        .product-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0px 20px 45px rgba(0,0,0,0.5);
         }
 
         .product-card img {
@@ -163,19 +191,10 @@
             margin-bottom: 12px;
         }
 
-        .product-card h3 {
-            margin-bottom: 6px;
-        }
-
         .price {
             color: #b9ffb9;
             font-weight: bold;
             margin-bottom: 8px;
-        }
-
-        .product-card p {
-            font-size: 0.95rem;
-            opacity: 0.95;
         }
 
         .see-all {
@@ -184,35 +203,6 @@
             color: #b9ffb9;
             cursor: pointer;
             font-weight: 600;
-            transition: 0.3s;
-        }
-
-        .see-all:hover {
-            color: white;
-            transform: translateX(5px);
-        }
-
-        /* ===== SERVICES ===== */
-        .cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 30px;
-            max-width: 1000px;
-            margin: auto;
-        }
-
-        .card {
-            background: rgba(255, 255, 255, 0.18);
-            backdrop-filter: blur(12px);
-            border-radius: 22px;
-            padding: 35px 28px;
-            box-shadow: 0px 12px 35px rgba(0,0,0,0.35);
-            border: 1px solid rgba(255,255,255,0.25);
-            transition: 0.3s;
-        }
-
-        .card:hover {
-            transform: translateY(-8px);
         }
 
         footer {
@@ -227,9 +217,7 @@
 <body>
 
 <header>
-    <div id="authArea">
-        <button onclick="goToSignup()">Login / Signup</button>
-    </div>
+    <div id="authArea"></div>
 </header>
 
 <!-- HERO -->
@@ -259,25 +247,8 @@
     <h2>🚜 What We Serve</h2>
     <p>
         AgriBazaar empowers farmers and buyers with transparent trading,
-        real-time pricing, secure transactions and smarter supply chain connectivity.
+        real-time pricing and secure transactions.
     </p>
-
-    <div class="cards">
-        <div class="card">
-            <h3>🌾 Smart Crop Trading</h3>
-            <p>Farmers list crops directly, buyers place bids.</p>
-        </div>
-
-        <div class="card">
-            <h3>📦 Pre-Order System</h3>
-            <p>Buyers reserve upcoming harvests in advance.</p>
-        </div>
-
-        <div class="card">
-            <h3>🔔 Alerts & Transparency</h3>
-            <p>Automated notifications for bids and updates.</p>
-        </div>
-    </div>
 </div>
 
 <footer>
@@ -293,6 +264,10 @@
         window.location.href = "upload_product.html";
     }
 
+    function goToCart() {
+        window.location.href = "cart.html";
+    }
+
     function logout() {
         localStorage.removeItem("loggedInUser");
         localStorage.removeItem("userRole");
@@ -304,16 +279,31 @@
         const role = localStorage.getItem("userRole");
         const authArea = document.getElementById("authArea");
 
-        if (user) {
-            let buttons = `<span class="username">👤 ${user}</span>`;
-
-            if (role === "FARMER") {
-                buttons += `<button class="upload-btn" onclick="goToUpload()">Upload Product</button>`;
-            }
-
-            buttons += `<button onclick="logout()">Logout</button>`;
-            authArea.innerHTML = buttons;
+        if (!user) {
+            authArea.innerHTML =
+                `<button onclick="goToSignup()">Login / Signup</button>`;
+            return;
         }
+
+        let links = "";
+
+        if (role === "FARMER") {
+            links += `<a onclick="goToUpload()">📤 Upload Product</a>`;
+        }
+
+        links += `
+            <a onclick="goToCart()">🛒 Cart</a>
+            <a class="logout" onclick="logout()">🚪 Logout</a>
+        `;
+
+        authArea.innerHTML = `
+            <div class="profile-wrapper">
+                <div class="profile-btn">👤 ${user}</div>
+                <div class="profile-dropdown">
+                    ${links}
+                </div>
+            </div>
+        `;
     }
 
     function scrollToServices() {
@@ -329,7 +319,7 @@
         products.slice(0, 4).forEach(p => {
             container.innerHTML += `
                 <div class="product-card">
-                    <img src="${p.imageUrl}" alt="${p.name}">
+                    <img src="${p.imageUrl}">
                     <h3>${p.name}</h3>
                     <div class="price">₹${p.cost}</div>
                     <p>${p.description}</p>

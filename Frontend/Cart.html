@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>My Cart | AgriBazaar</title>
+
     <style>
         body {
             font-family: Arial;
@@ -46,6 +47,13 @@
             font-weight: bold;
             margin-top: 20px;
         }
+
+        .empty-cart {
+            text-align: center;
+            font-size: 22px;
+            color: #555;
+            margin-top: 50px;
+        }
     </style>
 </head>
 
@@ -57,31 +65,57 @@
 <div class="total" id="totalAmount"></div>
 
 <script>
-    const userId = 2; // 🔴 replace with logged-in user id
+    const userId = Number(localStorage.getItem("userId"));
+    const container = document.getElementById("cartContainer");
+    const totalDiv = document.getElementById("totalAmount");
 
     async function loadCart() {
-        const res = await fetch(`http://localhost:8083/cart/user/${userId}`);
-        const cart = await res.json();
+        try {
+            const res = await fetch(`http://localhost:8083/cart/user/${userId}`);
 
-        const container = document.getElementById("cartContainer");
-        container.innerHTML = "";
+            if (!res.ok) {
+                throw new Error("Cart empty");
+            }
 
-        cart.items.forEach(item => {
-            container.innerHTML += `
-                <div class="cart-item">
-                    <img src="${item.product.imageUrl}">
-                    <div class="details">
-                        <h3>${item.product.name}</h3>
-                        <p>Price:${item.product.cost}</p>
-                        <p>Quantity: ${item.quantity}</p>
-                        <p class="price">Total:₹ ${item.subtotal}</p>
+            const cart = await res.json();
+
+            // If cart has no items
+            if (!cart.items || cart.items.length === 0) {
+                showEmptyCart();
+                return;
+            }
+
+            container.innerHTML = "";
+            totalDiv.innerHTML = "";
+
+            cart.items.forEach(item => {
+                container.innerHTML += `
+                    <div class="cart-item">
+                        <img src="${item.product.imageUrl}">
+                        <div class="details">
+                            <h3>${item.product.name}</h3>
+                            <p>Price: ₹ ${item.product.cost}</p>
+                            <p>Quantity: ${item.quantity}</p>
+                            <p class="price">Total: ₹ ${item.subtotal}</p>
+                        </div>
                     </div>
-                </div>
-            `;
-        });
+                `;
+            });
 
-        document.getElementById("totalAmount").innerText =
-            "Total: ₹ " + cart.totalAmount;
+            totalDiv.innerText = "Total: ₹ " + cart.totalAmount;
+
+        } catch (err) {
+            showEmptyCart();
+        }
+    }
+
+    function showEmptyCart() {
+        container.innerHTML = `
+            <div class="empty-cart">
+                🛒 Your cart is empty
+            </div>
+        `;
+        totalDiv.innerHTML = "";
     }
 
     loadCart();
