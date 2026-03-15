@@ -300,6 +300,68 @@
           font-weight:800;
           color:white;
         }
+
+        @media (max-width: 520px) {
+    body { padding: 10px; }
+
+    .brand h1 { font-size: 20px; }
+    .brand p { font-size: 12px; }
+
+    .nav a { padding: 8px 10px; font-size: 12px; }
+
+    .topbar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .layout {
+        gap: 14px;
+    }
+
+    .card { padding: 14px; }
+
+    /* product grid - 2 per row on mobile */
+    .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .product-card {
+        padding: 8px;
+        border-radius: 14px;
+    }
+
+    .product-card img {
+        height: 130px;       /* smaller, portrait style */
+        border-radius: 10px;
+    }
+
+    .product-name {
+        font-size: 13px;
+        margin: 6px 0 2px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis; /* long names get ... */
+    }
+
+    .product-desc {
+        display: none; /* hide description to save space */
+    }
+
+    .pill {
+        font-size: 11px;
+        padding: 4px 8px;
+    }
+
+    .meta {
+        margin-top: 6px;
+        gap: 4px;
+    }
+
+    .section-title h2 { font-size: 16px; }
+    .small-note { font-size: 12px; }
+}
     </style>
 </head>
 

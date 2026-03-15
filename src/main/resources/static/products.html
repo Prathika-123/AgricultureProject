@@ -203,12 +203,6 @@
           .grid { grid-template-columns: repeat(2, 1fr); }
         }
 
-        @media (max-width: 520px) {
-          body { padding: 14px; }
-          .grid { grid-template-columns: 1fr; }
-          .btn { padding: 9px 12px; font-size: 13px; }
-        }
-
         /* product card */
         .card {
           background: var(--card);
@@ -413,6 +407,39 @@
           font-weight: 700;
           font-size: 14px;
         }
+
+        @media (max-width: 520px) {
+  body { padding: 8px; }
+
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    margin-top: 10px;
+  }
+
+  .card { padding: 8px; border-radius: 12px; }
+  .card img { height: 120px; border-radius: 10px; }
+  .card h3 { font-size: 13px; margin-top: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .desc { display: none; }
+  .pill { font-size: 11px; padding: 4px 8px; }
+  .meta { margin-top: 6px; gap: 4px; }
+  .btn-row { margin-top: 8px; gap: 6px; }
+  .action-btn { font-size: 12px; padding: 8px 6px; border-radius: 10px; }
+
+  .topbar { flex-direction: column; align-items: flex-start; position: static; gap: 8px; padding: 12px; }
+  .actions { width: 100%; justify-content: flex-start; }
+  .btn { padding: 8px 10px; font-size: 12px; }
+  .title-wrap h1 { font-size: 17px; }
+  .title-wrap p { display: none; }
+
+  .search-wrap { padding: 10px; margin-top: 10px; }
+  .search-wrap label { display: none; }
+  #searchInput { min-width: unset; width: 100%; padding: 10px 12px; }
+
+  .inline-form { flex-direction: column; }
+  .inline-form input { min-width: unset; width: 100%; }
+  .inline-form button { width: 100%; }
+}
     </style>
 </head>
 
