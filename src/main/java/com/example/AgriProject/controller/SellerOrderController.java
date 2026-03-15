@@ -9,7 +9,6 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:63342")
 public class SellerOrderController {
 
     private final SellerOrderService service;

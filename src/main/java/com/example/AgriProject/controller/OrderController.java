@@ -13,7 +13,6 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:63342")
 public class OrderController {
     private final OrderService orderService;
     private final OrderRepository orderRepository;
